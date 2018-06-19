@@ -23,7 +23,7 @@ RUN apt-get install -y vim
 RUN apt-get install -y libmcrypt-dev && docker-php-ext-install mcrypt
 
 # GD
-RUN apt-get install -y libgd3 libfreetype6-dev libjpeg62-turbo-dev libpng12-dev && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && docker-php-ext-install gd
+RUN apt-get install -y libgd3 libfreetype6-dev libjpeg62-turbo-dev libpng-dev && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && docker-php-ext-install gd
 RUN docker-php-ext-install exif mbstring
 
 # Mail stuff
@@ -44,6 +44,8 @@ RUN apt-get -y install cron
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
+
+RUN apt-get update && apt-get install -my wget gnupg
 
 # Front stuff
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
@@ -72,3 +74,5 @@ RUN apt-get clean all -y && apt-get autoclean -y
 
 # X-Debug
 #RUN pecl install xdebug
+
+RUN docker-php-ext-install opcache
